@@ -1,0 +1,457 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;1,600;1,700&display=swap');
+
+:root {
+  --paper: #fff8f3;
+  --ink: #27242a;
+  --muted: #716a69;
+  --coral: #ed7254;
+  --line: #e7dcd5;
+
+  --card-bg: #f9d8cb;
+  --card-border: #f0beab;
+  --card-accent: #e8a28a;
+  --card-text-muted: #805c54;
+  --card-icon-bg: rgba(255, 248, 243, 0.7);
+  --card-icon-color: #8c3830;
+  --card-tag-bg: rgba(255, 248, 243, 0.55);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  overflow-x: hidden;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: 'DM Sans', sans-serif;
+}
+
+
+/* =========================
+   SKILLS SECTION
+========================= */
+
+.skills-section {
+  width: 100%;
+  padding: 70px 0;
+}
+
+.skills-container {
+  width: min(1180px, calc(100% - 56px));
+  margin: 0 auto;
+}
+
+
+/* =========================
+   HEADING
+========================= */
+
+.skills-heading {
+  max-width: 650px;
+  margin-bottom: 38px;
+}
+
+.skills-label {
+  display: block;
+  margin-bottom: 18px;
+  color: var(--coral);
+  font-family: 'DM Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.skills-heading h2 {
+  margin: 0;
+  font-size: clamp(2.2rem, 4vw, 3.6rem);
+  font-weight: 500;
+  letter-spacing: -0.05em;
+  line-height: 1.05;
+}
+
+.skills-heading h2 em {
+  color: var(--coral);
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-weight: 600;
+}
+
+.skills-heading p {
+  max-width: 500px;
+  margin: 22px 0 0;
+  color: var(--muted);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+
+/* =========================
+   MARQUEE
+========================= */
+
+.skills-marquee {
+  position: relative;
+  width: 100%;
+  padding: 12px 0;
+  overflow: hidden;
+  border: 1px solid #ead8cf;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.4);
+  box-shadow: inset 0 0 35px rgba(237, 114, 84, 0.04);
+}
+
+
+/* Left / Right fade */
+
+.skills-marquee::before,
+.skills-marquee::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  z-index: 3;
+  width: 90px;
+  pointer-events: none;
+}
+
+.skills-marquee::before {
+  left: 0;
+  background: linear-gradient(
+    to right,
+    var(--paper),
+    transparent
+  );
+}
+
+.skills-marquee::after {
+  right: 0;
+  background: linear-gradient(
+    to left,
+    var(--paper),
+    transparent
+  );
+}
+
+
+/* =========================
+   MOVING TRACK
+========================= */
+
+.marquee-track {
+  width: max-content;
+
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: stretch;
+
+  gap: 14px;
+
+  padding: 0 14px;
+
+  animation: skill-marquee 35s linear infinite;
+
+  will-change: transform;
+}
+
+
+/* Pause when mouse is over */
+
+.skills-marquee:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+
+/* =========================
+   SKILL CARD
+========================= */
+
+.skill-card {
+  position: relative;
+
+  width: 240px;
+  min-width: 240px;
+  min-height: 195px;
+
+  flex: 0 0 240px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  padding: 20px;
+
+  overflow: hidden;
+
+  background: var(--card-bg);
+
+  border: 1px solid var(--card-border);
+  border-radius: 18px;
+
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+
+/* Decorative circle */
+
+.skill-card::before {
+  content: '';
+
+  position: absolute;
+
+  width: 140px;
+  height: 140px;
+
+  right: -70px;
+  bottom: -70px;
+
+  border-radius: 50%;
+
+  background: var(--card-accent);
+
+  transition:
+    transform 0.45s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+
+/* Hover */
+
+.skill-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 16px 32px rgba(104, 68, 51, 0.12);
+}
+
+.skill-card:hover::before {
+  transform: scale(1.4);
+}
+
+
+/* =========================
+   CARD TOP
+========================= */
+
+.skill-card-top {
+  position: relative;
+  z-index: 1;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin-bottom: 18px;
+}
+
+.skill-number {
+  color: var(--card-text-muted);
+
+  font-family: 'DM Mono', monospace;
+  font-size: 0.65rem;
+  font-weight: 500;
+
+  letter-spacing: 0.08em;
+}
+
+
+/* =========================
+   ICON
+========================= */
+
+.skill-icon {
+  width: 36px;
+  height: 36px;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 10px;
+
+  background: var(--card-icon-bg);
+  color: var(--card-icon-color);
+
+  font-size: 0.95rem;
+
+  transition:
+    transform 0.3s ease,
+    background 0.3s ease,
+    color 0.3s ease;
+}
+
+.skill-card:hover .skill-icon {
+  transform: rotate(-8deg) scale(1.05);
+
+  background: var(--card-icon-color);
+  color: var(--paper);
+}
+
+
+/* =========================
+   CARD TEXT
+========================= */
+
+.skill-card h3 {
+  position: relative;
+  z-index: 1;
+
+  margin: 0 0 6px;
+
+  color: var(--ink);
+
+  font-size: 1.15rem;
+  font-weight: 600;
+
+  letter-spacing: -0.02em;
+}
+
+.skill-card p {
+  position: relative;
+  z-index: 1;
+
+  margin: 0 0 16px;
+
+  color: var(--card-text-muted);
+
+  font-size: 0.72rem;
+  line-height: 1.45;
+}
+
+
+/* =========================
+   TAGS
+========================= */
+
+.skill-tags {
+  position: relative;
+  z-index: 1;
+
+  display: flex;
+  flex-wrap: wrap;
+
+  gap: 6px;
+
+  margin-top: auto;
+}
+
+.skill-tags span {
+  padding: 4px 8px;
+
+  border: 1px solid rgba(140, 56, 48, 0.2);
+  border-radius: 999px;
+
+  background: var(--card-tag-bg);
+  color: #633d38;
+
+  font-size: 0.58rem;
+  font-weight: 600;
+}
+
+
+/* =========================
+   INFINITE ANIMATION
+========================= */
+
+/*
+  There are 8 cards + identical 8 cards.
+
+  The second set starts exactly where
+  the first set ends.
+
+  Moving -50% makes the second set
+  replace the first set seamlessly.
+*/
+
+@keyframes skill-marquee {
+
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 700px) {
+
+  .skills-section {
+    padding: 50px 0 60px;
+  }
+
+  .skills-container {
+    width: calc(100% - 32px);
+  }
+
+  .skills-heading {
+    margin-bottom: 28px;
+  }
+
+  .skills-heading h2 {
+    font-size: 2.3rem;
+  }
+
+  .skills-heading p {
+    font-size: 0.88rem;
+  }
+
+  .skills-marquee {
+    border-radius: 18px;
+  }
+
+  .skills-marquee::before,
+  .skills-marquee::after {
+    width: 40px;
+  }
+
+  .marquee-track {
+    gap: 12px;
+    padding: 0 12px;
+
+    animation-duration: 28s;
+  }
+
+  .skill-card {
+    width: 210px;
+    min-width: 210px;
+    flex-basis: 210px;
+
+    min-height: 180px;
+
+    padding: 16px;
+  }
+
+  .skill-card h3 {
+    font-size: 1rem;
+  }
+
+  .skill-card p {
+    font-size: 0.68rem;
+  }
+}
+
+
+/* =========================
+   REDUCED MOTION
+========================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .marquee-track {
+    animation: none;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
+}

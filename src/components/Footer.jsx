@@ -1,5 +1,6 @@
 import React from 'react';
-import { GithubIcon, LinkedinIcon, TwitterIcon, MailIcon } from './Icons';
+import { GithubIcon, LinkedinIcon, TwitterIcon, MailIcon, WhatsAppIcon } from './Icons';
+import { contactInfo } from '../data/portfolioData';
 
 export default function Footer({ onNavigate }) {
   const handleLink = (e, target) => {
@@ -37,22 +38,27 @@ export default function Footer({ onNavigate }) {
               <h3>Connect</h3>
               <ul>
                 <li>
-                  <a href="https://github.com/annathfathima" target="_blank" rel="noopener noreferrer" style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>
+                  <a href={contactInfo.socials.github} target="_blank" rel="noopener noreferrer" style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>
                     <GithubIcon size={16} /> GitHub
                   </a>
                 </li>
                 <li>
-                  <a href="https://www.linkedin.com/in/hanna-fathima-341a04248" target="_blank" rel="noopener noreferrer" style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>
+                  <a href={contactInfo.socials.linkedin} target="_blank" rel="noopener noreferrer" style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>
                     <LinkedinIcon size={16} /> LinkedIn
                   </a>
                 </li>
                 <li>
-                  <a href="https://x.com/Hannamp70" target="_blank" rel="noopener noreferrer" style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>
+                  <a href={contactInfo.socials.whatsapp} target="_blank" rel="noopener noreferrer" style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>
+                    <WhatsAppIcon size={16} /> WhatsApp
+                  </a>
+                </li>
+                <li>
+                  <a href={contactInfo.socials.twitter} target="_blank" rel="noopener noreferrer" style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>
                     <TwitterIcon size={16} /> Twitter / X
                   </a>
                 </li>
                 <li>
-                  <a href="mailto:your.annathfathima9@gmail.com" style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>
+                  <a href={`mailto:${contactInfo.email}`} style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>
                     <MailIcon size={16} /> Email Me
                   </a>
                 </li>

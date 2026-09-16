@@ -13,46 +13,16 @@ export default function Navbar({ currentPage, onNavigate }) {
 
   const handleNavClick = (e, target) => {
     e.preventDefault();
-    if (target === 'about') {
-      onNavigate('about');
-      return;
-    }
-
-    if (currentPage !== 'home') {
-      onNavigate('home');
-      setTimeout(() => {
-        if (target === 'home') {
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-        } else {
-          const el = document.getElementById(target);
-          if (el) el.scrollIntoView({ behavior: 'smooth' });
-        }
-      }, 100);
-    } else {
-      if (target === 'home') {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      } else {
-        const el = document.getElementById(target);
-        if (el) el.scrollIntoView({ behavior: 'smooth' });
-      }
-    }
+    onNavigate(target);
   };
 
   return (
     <nav className="navbar" style={{ boxShadow: scrolled ? '0 12px 35px rgba(126, 87, 72, 0.12)' : '' }}>
-      <a 
-        href="#home" 
-        className="logo"
-        onClick={(e) => handleNavClick(e, 'home')}
-      >
-        Hanna
-      </a>
-      
       <ul className="nav-links">
         <li>
           <a 
             href="#home" 
-            className={currentPage === 'home' ? 'nav-link-active' : ''}
+            className={currentPage === 'home' ? 'active' : ''}
             onClick={(e) => handleNavClick(e, 'home')}
           >
             Home
@@ -61,7 +31,7 @@ export default function Navbar({ currentPage, onNavigate }) {
         <li>
           <a 
             href="#about" 
-            className={currentPage === 'about' ? 'nav-link-active' : ''}
+            className={currentPage === 'about' ? 'active' : ''}
             onClick={(e) => handleNavClick(e, 'about')}
           >
             About
@@ -70,7 +40,7 @@ export default function Navbar({ currentPage, onNavigate }) {
         <li>
           <a 
             href="#skills" 
-            className={currentPage === 'skills' ? 'nav-link-active' : ''}
+            className={currentPage === 'skills' ? 'active' : ''}
             onClick={(e) => handleNavClick(e, 'skills')}
           >
             Skills
@@ -79,7 +49,7 @@ export default function Navbar({ currentPage, onNavigate }) {
         <li>
           <a 
             href="#projects" 
-            className={currentPage === 'projects' ? 'nav-link-active' : ''}
+            className={currentPage === 'projects' ? 'active' : ''}
             onClick={(e) => handleNavClick(e, 'projects')}
           >
             Projects
@@ -88,10 +58,10 @@ export default function Navbar({ currentPage, onNavigate }) {
         <li>
           <a 
             href="#contact" 
-            className={`nav-cta-btn ${currentPage === 'contact' ? 'nav-cta-active' : ''}`}
+            className={currentPage === 'contact' ? 'active' : ''}
             onClick={(e) => handleNavClick(e, 'contact')}
           >
-            Contact Me
+            Contact
           </a>
         </li>
       </ul>

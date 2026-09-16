@@ -256,26 +256,14 @@ export default function SkillsPage({ onNavigate }) {
                   <button 
                     type="button" 
                     className="btn btn-primary"
-                    onClick={() => {
-                      onNavigate('home');
-                      setTimeout(() => {
-                        const el = document.getElementById('projects');
-                        if (el) el.scrollIntoView({ behavior: 'smooth' });
-                      }, 100);
-                    }}
+                    onClick={() => onNavigate('projects')}
                   >
                     View Project Showcase <ArrowUpRight size={16} />
                   </button>
                   <button 
                     type="button" 
                     className="btn btn-secondary"
-                    onClick={() => {
-                      onNavigate('home');
-                      setTimeout(() => {
-                        const el = document.getElementById('contact');
-                        if (el) el.scrollIntoView({ behavior: 'smooth' });
-                      }, 100);
-                    }}
+                    onClick={() => onNavigate('contact')}
                   >
                     Contact Me
                   </button>

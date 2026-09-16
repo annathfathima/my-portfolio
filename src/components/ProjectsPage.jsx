@@ -15,16 +15,22 @@ import {
   Zap, 
   FolderGit2,
   ChevronLeft,
-  ChevronRight
+  ChevronRight,
+  ChevronDown
 } from 'lucide-react';
 import { GithubIcon } from './Icons';
 import { projectsData } from '../data/portfolioData';
 
 export default function ProjectsPage({ onNavigate }) {
   const [activeFilter, setActiveFilter] = useState('all');
-  const [viewMode, setViewMode] = useState('grid'); // 'grid' | 'spotlight'
+  const [viewMode, setViewMode] = useState('cards'); // 'cards' | 'spotlight'
   const [spotlightIndex, setSpotlightIndex] = useState(0);
   const [selectedProject, setSelectedProject] = useState(null);
+  const [expandedCardId, setExpandedCardId] = useState('01');
+
+  const toggleExpand = (id) => {
+    setExpandedCardId(prev => prev === id ? null : id);
+  };
 
   // Scroll to top when page mounts
   useEffect(() => {
@@ -59,6 +65,91 @@ export default function ProjectsPage({ onNavigate }) {
   const handlePrevSpotlight = () => {
     if (spotlightIndex > 0) {
       setSpotlightIndex(prev => prev - 1);
+    }
+  };
+
+  const renderProjectGraphic = (project) => {
+    switch (project.visualClass) {
+      case 'visual-instagram':
+        return (
+          <div className="insta-mockup">
+            <div className="insta-mockup-header">
+              <div className="insta-avatar" />
+              <div className="insta-bar" />
+            </div>
+            <div className="insta-feed">
+              <Sparkles size={22} />
+            </div>
+          </div>
+        );
+      case 'visual-ecommerce-django':
+        return (
+          <div className="django-mockup">
+            <div className="django-item">
+              <div className="django-item-thumb" />
+              <div className="django-item-bar" />
+            </div>
+            <div className="django-item">
+              <div className="django-item-thumb" style={{ background: 'linear-gradient(135deg, #38bdf8, #0284c7)' }} />
+              <div className="django-item-bar" />
+            </div>
+          </div>
+        );
+      case 'visual-ecommerce-js':
+        return (
+          <div className="store-mockup">
+            <div className="store-bag-icon">
+              <Code2 size={26} />
+            </div>
+          </div>
+        );
+      case 'visual-student-perf':
+        return (
+          <div className="chart-mockup">
+            <span className="chart-bar" />
+            <span className="chart-bar" />
+            <span className="chart-bar" />
+            <span className="chart-bar" />
+            <span className="chart-bar" />
+          </div>
+        );
+      case 'visual-burnout':
+        return (
+          <div className="burnout-mockup">
+            <div className="neural-pulse">
+              <span className="neural-node" />
+              <span className="neural-line" />
+              <span className="neural-node" />
+              <span className="neural-line" />
+              <span className="neural-node" />
+            </div>
+          </div>
+        );
+      case 'visual-co2':
+        return (
+          <div className="eco-mockup">
+            <span className="eco-value">124 g</span>
+            <span className="eco-label">CO₂ / km Predicted</span>
+          </div>
+        );
+      case 'visual-safarbee':
+        return (
+          <div className="safar-mockup">
+            <div className="safar-pill">Explore • Journey</div>
+            <div className="safar-route-line" />
+          </div>
+        );
+      case 'visual-netflix':
+        return (
+          <div className="netflix-mockup">
+            <span className="netflix-logo-mock">NETFLIX</span>
+            <div className="netflix-bi-bars">
+              <span /><span /><span /><span />
+            </div>
+          </div>
+        );
+      default:
+        return <Code2 size={26} />;
     }
   };
 
@@ -145,12 +236,12 @@ export default function ProjectsPage({ onNavigate }) {
             <div className="projects-view-toggle">
               <button
                 type="button"
-                className={`view-mode-btn ${viewMode === 'grid' ? 'active' : ''}`}
-                onClick={() => setViewMode('grid')}
-                title="Bento Grid View"
+                className={`view-mode-btn ${viewMode === 'cards' || viewMode === 'grid' ? 'active' : ''}`}
+                onClick={() => setViewMode('cards')}
+                title="Interactive Expandable Cards View"
               >
-                <LayoutGrid size={16} />
-                <span>Grid View</span>
+                <Layers size={16} />
+                <span>Expandable Cards</span>
               </button>
               <button
                 type="button"
@@ -172,164 +263,184 @@ export default function ProjectsPage({ onNavigate }) {
         <div className="projects-page-container">
           
           <AnimatePresence mode="wait">
-            {viewMode === 'grid' ? (
+            {viewMode === 'cards' || viewMode === 'grid' ? (
               
-              /* ================= GRID VIEW ================= */
+              /* ================= EXPANDABLE CARDS SHOWCASE ================= */
               <motion.div 
-                key={`grid-${activeFilter}`}
-                className="projects-standalone-grid"
+                key={`expandable-${activeFilter}`}
+                className="projects-expandable-list"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
                 transition={{ duration: 0.35 }}
               >
-                {filteredProjects.map((project, idx) => (
-                  <motion.div 
-                    key={project.id} 
-                    className="standalone-project-card"
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.4, delay: idx * 0.06 }}
-                  >
-                    {/* Visual Mockup Header */}
-                    <div className={`project-card-visual ${project.visualClass}`}>
-                      <div className="card-top-badges">
-                        <span className="card-num-badge">
-                          <span className="dot" /> #{project.id}
-                        </span>
-                        <span className="card-cat-badge">{project.categoryLabel}</span>
-                      </div>
+                {filteredProjects.map((project, idx) => {
+                  const isExpanded = expandedCardId === project.id;
 
-                      {/* Graphic Mockups */}
-                      <div className="visual-graphic">
-                        {project.visualClass === 'visual-instagram' && (
-                          <div className="insta-mockup">
-                            <div className="insta-mockup-header">
-                              <div className="insta-avatar" />
-                              <div className="insta-bar" />
+                  return (
+                    <motion.div 
+                      key={project.id} 
+                      className={`expandable-card ${isExpanded ? 'is-expanded' : ''}`}
+                      initial={{ opacity: 0, y: 25 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.35, delay: idx * 0.04 }}
+                    >
+                      {/* Main Clickable Header Row */}
+                      <div 
+                        className="expandable-card-header"
+                        onClick={() => toggleExpand(project.id)}
+                        role="button"
+                        tabIndex={0}
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault();
+                            toggleExpand(project.id);
+                          }
+                        }}
+                      >
+                        <div className="card-header-main">
+                          <span className="expand-index-badge">#{project.id}</span>
+                          <div className="card-header-titles">
+                            <div className="title-badges-wrap">
+                              <h3 className="expand-card-title">{project.title}</h3>
+                              <span className="card-cat-badge">{project.categoryLabel}</span>
                             </div>
-                            <div className="insta-feed">
-                              <Sparkles size={20} />
-                            </div>
+                            {!isExpanded && (
+                              <p className="card-header-preview-desc">{project.description}</p>
+                            )}
                           </div>
-                        )}
-                        {project.visualClass === 'visual-ecommerce-django' && (
-                          <div className="django-mockup">
-                            <div className="django-item">
-                              <div className="django-item-thumb" />
-                              <div className="django-item-bar" />
-                            </div>
-                            <div className="django-item">
-                              <div className="django-item-thumb" style={{ background: 'linear-gradient(135deg, #38bdf8, #0284c7)' }} />
-                              <div className="django-item-bar" />
-                            </div>
-                          </div>
-                        )}
-                        {project.visualClass === 'visual-ecommerce-js' && (
-                          <div className="store-mockup">
-                            <div className="store-bag-icon">
-                              <Code2 size={24} />
-                            </div>
-                          </div>
-                        )}
-                        {project.visualClass === 'visual-student-perf' && (
-                          <div className="chart-mockup">
-                            <span className="chart-bar" />
-                            <span className="chart-bar" />
-                            <span className="chart-bar" />
-                            <span className="chart-bar" />
-                            <span className="chart-bar" />
-                          </div>
-                        )}
-                        {project.visualClass === 'visual-burnout' && (
-                          <div className="burnout-mockup">
-                            <div className="neural-pulse">
-                              <span className="neural-node" />
-                              <span className="neural-line" />
-                              <span className="neural-node" />
-                              <span className="neural-line" />
-                              <span className="neural-node" />
-                            </div>
-                          </div>
-                        )}
-                        {project.visualClass === 'visual-co2' && (
-                          <div className="eco-mockup">
-                            <span className="eco-value">124 g</span>
-                            <span className="eco-label">CO₂ / km Predicted</span>
-                          </div>
-                        )}
-                        {project.visualClass === 'visual-safarbee' && (
-                          <div className="safar-mockup">
-                            <div className="safar-pill">Explore • Journey</div>
-                            <div className="safar-route-line" />
-                          </div>
-                        )}
-                        {project.visualClass === 'visual-netflix' && (
-                          <div className="netflix-mockup">
-                            <span className="netflix-logo-mock">NETFLIX</span>
-                            <div className="netflix-bi-bars">
-                              <span /><span /><span /><span />
-                            </div>
-                          </div>
-                        )}
-                      </div>
-                    </div>
-
-                    {/* Card Content */}
-                    <div className="project-card-body">
-                      <div className="card-title-row">
-                        <h3>{project.title}</h3>
-                        <button 
-                          type="button" 
-                          className="inspect-btn"
-                          onClick={() => setSelectedProject(project)}
-                          title="Inspect Architecture"
-                        >
-                          <SlidersHorizontal size={15} />
-                        </button>
-                      </div>
-
-                      <p className="card-desc">{project.description}</p>
-
-                      {project.metrics && (
-                        <div className="card-metric-hint">
-                          <Zap size={13} className="hint-icon" />
-                          <span>{project.metrics}</span>
                         </div>
-                      )}
 
-                      {/* Tags */}
-                      <div className="card-tags">
-                        {project.tags.map(tag => (
-                          <span key={tag}>{tag}</span>
-                        ))}
+                        <div className="card-header-meta">
+                          {project.metrics && (
+                            <div className="expand-metric-hint">
+                              <Zap size={13} className="hint-icon" />
+                              <span>{project.metrics.split('•')[0].trim()}</span>
+                            </div>
+                          )}
+
+                          <div className="expand-tags-preview">
+                            {project.tags.slice(0, 3).map(tag => (
+                              <span key={tag} className="tag-pill-mini">{tag}</span>
+                            ))}
+                            {project.tags.length > 3 && (
+                              <span className="tag-pill-more">+{project.tags.length - 3}</span>
+                            )}
+                          </div>
+
+                          <button 
+                            type="button" 
+                            className={`expand-chevron-btn ${isExpanded ? 'expanded' : ''}`}
+                            aria-label={isExpanded ? 'Collapse project details' : 'Expand project details'}
+                          >
+                            <ChevronDown size={19} />
+                          </button>
+                        </div>
                       </div>
 
-                      {/* Action Links */}
-                      <div className="card-actions">
-                        <button
-                          type="button"
-                          className="btn-card-action primary"
-                          onClick={() => setSelectedProject(project)}
-                        >
-                          <span>Inspect Deep Dive</span>
-                          <ArrowUpRight size={15} />
-                        </button>
+                      {/* Smooth Animated Expansion Drawer */}
+                      <AnimatePresence initial={false}>
+                        {isExpanded && (
+                          <motion.div 
+                            key={`drawer-${project.id}`}
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: 'auto', opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            transition={{ duration: 0.38, ease: [0.2, 0.8, 0.2, 1] }}
+                            className="expandable-drawer"
+                          >
+                            <div className="expandable-drawer-inner">
+                              
+                              {/* Left Column: Visual Mockup Showcase */}
+                              <div className={`drawer-visual-box ${project.visualClass}`}>
+                                <div className="drawer-visual-top">
+                                  <span className="drawer-num-badge">
+                                    <span className="dot" /> Project {project.id}
+                                  </span>
+                                  <span className="drawer-category-pill">{project.categoryLabel}</span>
+                                </div>
 
-                        <a 
-                          href={project.githubUrl} 
-                          target="_blank" 
-                          rel="noreferrer" 
-                          className="btn-card-action icon-only"
-                          title="View Source on GitHub"
-                        >
-                          <GithubIcon size={17} />
-                        </a>
-                      </div>
-                    </div>
+                                <div className="visual-graphic">
+                                  {renderProjectGraphic(project)}
+                                </div>
+                              </div>
 
-                  </motion.div>
-                ))}
+                              {/* Right Column: Architectural Specifications */}
+                              <div className="drawer-content-box">
+                                <div className="drawer-info-section">
+                                  <h4>Project Architecture &amp; Objectives</h4>
+                                  <p className="drawer-description">{project.description}</p>
+                                </div>
+
+                                {project.overview && (
+                                  <div className="drawer-overview-highlight">
+                                    <strong>Technical Highlights:</strong>
+                                    <p>{project.overview}</p>
+                                  </div>
+                                )}
+
+                                {project.metrics && (
+                                  <div className="drawer-metric-pill">
+                                    <Zap size={14} />
+                                    <span>{project.metrics}</span>
+                                  </div>
+                                )}
+
+                                <div className="drawer-tags-wrap">
+                                  <span className="drawer-tags-label">Technologies &amp; Libraries:</span>
+                                  <div className="card-tags">
+                                    {project.tags.map(t => (
+                                      <span key={t}>{t}</span>
+                                    ))}
+                                  </div>
+                                </div>
+
+                                <div className="drawer-actions-row">
+                                  <button
+                                    type="button"
+                                    className="btn-card-action primary"
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      setSelectedProject(project);
+                                    }}
+                                  >
+                                    <span>Full Architecture Specs</span>
+                                    <ArrowUpRight size={15} />
+                                  </button>
+
+                                  <a 
+                                    href={project.githubUrl}
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    className="btn-card-action secondary-outline"
+                                    onClick={(e) => e.stopPropagation()}
+                                  >
+                                    <GithubIcon size={16} />
+                                    <span>Source Code</span>
+                                  </a>
+
+                                  <button
+                                    type="button"
+                                    className="btn-card-action secondary-ghost"
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      onNavigate('contact');
+                                    }}
+                                  >
+                                    <span>Inquire</span>
+                                  </button>
+                                </div>
+
+                              </div>
+
+                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+
+                    </motion.div>
+                  );
+                })}
               </motion.div>
 
             ) : (

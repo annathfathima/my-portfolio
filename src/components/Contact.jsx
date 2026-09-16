@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Mail, MapPin, Send, Check, Copy, CheckCircle2, Clock, Sparkles } from 'lucide-react';
-import { GithubIcon, LinkedinIcon, TwitterIcon } from './Icons';
+import { GithubIcon, LinkedinIcon, TwitterIcon, WhatsAppIcon } from './Icons';
+import { contactInfo } from '../data/portfolioData';
 
 export default function Contact() {
   const [copied, setCopied] = useState(false);
@@ -88,8 +89,8 @@ export default function Contact() {
                 </div>
                 <div className="card-details">
                   <span className="card-label">Direct Email</span>
-                  <a href="mailto:annathfathima9@gmail.com" className="card-val-link">
-                    annathfathima9@gmail.com
+                  <a href={`mailto:${contactInfo.email}`} className="card-val-link">
+                    {contactInfo.email}
                   </a>
                 </div>
                 <button 
@@ -104,6 +105,19 @@ export default function Contact() {
                 </button>
               </div>
 
+              {/* WhatsApp Quick Chat Card */}
+              <div className="contact-card whatsapp-highlight-card">
+                <div className="card-icon-box" style={{ color: '#25D366', background: 'rgba(37, 211, 102, 0.12)' }}>
+                  <WhatsAppIcon size={20} />
+                </div>
+                <div className="card-details">
+                  <span className="card-label">WhatsApp Chat</span>
+                  <a href={contactInfo.socials.whatsapp} target="_blank" rel="noopener noreferrer" className="card-val-link" style={{ color: '#128C7E', fontWeight: 600 }}>
+                    {contactInfo.phone} &bull; Chat on WhatsApp &rarr;
+                  </a>
+                </div>
+              </div>
+
               {/* Location Card */}
               <div className="contact-card">
                 <div className="card-icon-box">
@@ -111,7 +125,7 @@ export default function Contact() {
                 </div>
                 <div className="card-details">
                   <span className="card-label">Location &amp; Timezone</span>
-                  <span className="card-val">Kerala, India (IST &bull; UTC +5:30)</span>
+                  <span className="card-val">{contactInfo.location} ({contactInfo.timezone})</span>
                 </div>
               </div>
 
@@ -136,7 +150,7 @@ export default function Contact() {
               <span className="socials-label">Connect Across the Web</span>
               <div className="socials-pills">
                 <a 
-                  href="https://github.com/annathfathima" 
+                  href={contactInfo.socials.github} 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="social-pill"
@@ -145,7 +159,7 @@ export default function Contact() {
                   <span>GitHub</span>
                 </a>
                 <a 
-                  href="https://www.linkedin.com/in/hanna-fathima-341a04248" 
+                  href={contactInfo.socials.linkedin} 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="social-pill"
@@ -154,7 +168,16 @@ export default function Contact() {
                   <span>LinkedIn</span>
                 </a>
                 <a 
-                  href="https://x.com/Hannamp70" 
+                  href={contactInfo.socials.whatsapp} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="social-pill whatsapp-pill"
+                >
+                  <WhatsAppIcon size={16} />
+                  <span>WhatsApp</span>
+                </a>
+                <a 
+                  href={contactInfo.socials.twitter} 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="social-pill"

@@ -139,7 +139,10 @@ export const skillsData = [
       "EDA",
       "Power BI",
       "Tableau",
-      "Statistics"
+      "Statistics",
+      "Machine Learning",
+      "Deep Learning",
+      "Computer Vision"
     ]
   },
   {
@@ -203,3 +206,17 @@ export const skillsData = [
     tags: ["Web Scraping", "Data Extraction", "Canva", "UI/UX Thinking", "Digital Marketing"]
   }
 ];
+
+export const contactInfo = {
+  name: "Hanna Fathima",
+  email: "annathfathima9@gmail.com",
+  phone: "+91 96454 92970",
+  location: "Kerala, India",
+  timezone: "IST (UTC+5:30)",
+  socials: {
+    github: "https://github.com/annathfathima",
+    linkedin: "https://www.linkedin.com/in/hanna-fathima-341a04248",
+    twitter: "https://x.com/Hannamp70",
+    whatsapp: "https://wa.me/919645492970?text=Hi%20Hanna%2C%20I%20saw%20your%20portfolio%20and%20would%20like%20to%20connect!"
+  }
+};

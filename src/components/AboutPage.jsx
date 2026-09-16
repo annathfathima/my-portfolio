@@ -310,13 +310,7 @@ export default function AboutPage({ onNavigate }) {
                   <button 
                     type="button" 
                     className="btn btn-secondary"
-                    onClick={() => {
-                      onNavigate('home');
-                      setTimeout(() => {
-                        const el = document.getElementById('contact');
-                        if (el) el.scrollIntoView({ behavior: 'smooth' });
-                      }, 100);
-                    }}
+                    onClick={() => onNavigate('contact')}
                   >
                     Contact Me
                   </button>

@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { ArrowUpRight, Sparkles, Code2, Brain } from 'lucide-react';
 
-export default function Hero() {
+export default function Hero({ onNavigate }) {
   return (
     <main className="hero" id="home">
       <div className="glow-bg top-left" />
@@ -11,7 +11,6 @@ export default function Hero() {
       {/* Hero Content */}
       <motion.div 
         className="hero-content" 
-        id="about"
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, ease: [0.2, 0.8, 0.2, 1] }}
@@ -37,10 +36,27 @@ export default function Hero() {
         </p>
 
         <div className="button-group">
-          <a href="#projects" className="btn btn-primary">
+          <a 
+            href="#projects" 
+            className="btn btn-primary"
+            onClick={(e) => {
+              e.preventDefault();
+              const el = document.getElementById('projects');
+              if (el) el.scrollIntoView({ behavior: 'smooth' });
+            }}
+          >
             View My Work <ArrowUpRight size={17} />
           </a>
-          <a href="#about" className="btn btn-secondary">
+          <a 
+            href="#about" 
+            className="btn btn-secondary"
+            onClick={(e) => {
+              if (onNavigate) {
+                e.preventDefault();
+                onNavigate('about');
+              }
+            }}
+          >
             About Me
           </a>
         </div>

@@ -4,7 +4,7 @@ import { ArrowUpRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import { GithubIcon } from './Icons';
 import { projectsData } from '../data/portfolioData';
 
-export default function Projects() {
+export default function Projects({ onNavigate }) {
   const [activeFilter, setActiveFilter] = useState('all');
   const [currentIndex, setCurrentIndex] = useState(0);
   const [direction, setDirection] = useState(1); // 1 = forward, -1 = backward
@@ -305,6 +305,34 @@ export default function Projects() {
                 Data Visualization <span className="badge">1</span>
               </button>
             </div>
+
+            {onNavigate && (
+              <div style={{ marginBottom: '16px' }}>
+                <button 
+                  type="button" 
+                  onClick={() => onNavigate('projects')}
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '6px',
+                    padding: '7px 16px',
+                    borderRadius: '999px',
+                    background: 'rgba(255, 255, 255, 0.85)',
+                    border: '1px solid var(--card-border)',
+                    color: 'var(--coral)',
+                    fontFamily: "'DM Sans', sans-serif",
+                    fontSize: '0.8rem',
+                    fontWeight: '600',
+                    cursor: 'pointer',
+                    boxShadow: 'var(--shadow-sm)',
+                    transition: 'all 0.2s ease'
+                  }}
+                >
+                  <span>Explore Full Catalog &amp; Architecture Specs</span>
+                  <ArrowUpRight size={13} />
+                </button>
+              </div>
+            )}
 
             {/* Stepper Progress & Direct Controls */}
             <div className="projects-stepper-control">
